@@ -1,0 +1,32 @@
+{
+  "name": "npms",
+  "version": "1.0.0",
+  "description": "telegram bot for npms.io",
+  "main": "npms.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "ava npms.test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kekdude/nmps-telegram-bot.git"
+  },
+  "keywords": [
+    "npms",
+    "telegram",
+    "bot"
+  ],
+  "author": "Alexander M <kekDude>",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/kekdude/nmps-telegram-bot/issues"
+  },
+  "homepage": "https://github.com/kekdude/nmps-telegram-bot#readme",
+  "dependencies": {
+    "chalk": "^2.0.1",
+    "is-json": "^2.0.1",
+    "moment": "^2.18.1"
+  }
+}

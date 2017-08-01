@@ -1,5 +1,8 @@
 {
-  "webhook_url": "https://x.kekdude.ru",
-  "webhook_secret": "kekdude",
-  "token": "qweasd"
+  "webhook_url": "",
+  "port": 443,
+  "token": "",
+  "about_text": "Telegram Bot for searching Node.js [packages](https://npmjs.com/) using API of [npms.io](https://npms.io/). Bot works with InlineMode. Open sources on [Github](https://github.com/kekdude/nmps-telegram-bot/)",
+  "tgURL": "https://api.telegram.org/bot",
+  "npmsURL": "https://api.npms.io/v2"
 }
