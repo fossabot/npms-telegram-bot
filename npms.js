@@ -1,11 +1,9 @@
 
 const https = require('https')
 const fs = require('fs')
-const promisify = require('util').promisify
-const is_json = require('is-json')
+const isJson = require('is-json')
 
 const config = require('./config')
-const request = promisify(https.request)
 
 const https_options = {
   key: fs.readFileSync('privkey.pem'),
@@ -14,39 +12,38 @@ const https_options = {
 
 const telegram = require('./lib/telegram')
 const handle = require('./lib/handle')
-const res_chunk = require('./lib/res_chunk')
+const resChunk = require('./lib/resChunk')
 const error = require('./lib/error')
+const green = require('./lib/green')
 
-Promise.all([
-    new Promise((re, rej) => {
-      telegram.webhook((res) => {
-        if (res.statusCode == 200)
-          res_chunk(res, (err, data) => {
-            if (err) rej(err)
-            else {
-              if (is_json(data)) {
-                const jsdata = JSON.parse(data)
-                if (jsdata.ok)
-                  re(jsdata)
-                else
-                  rej('not ok', data)
-              } else {
-                rej('not json', data)
-              }
-            }
-          })
-        else 
-          rej('bad status code: ', res.statusCode)
-      })
-    }),
-    new Promise((res, rej) => {
-      try {
-        res(https.createServer(https_options, handle).listen(config.port))
-      } catch (err) {
-        rej(err)
+const webhook_cb = (res) => {
+  if (res.statusCode == 200)
+    resChunk(res, (err, data) => {
+      if (err) error(err)
+      else {
+        if (isJson(data)) {
+          const jsdata = JSON.parse(data)
+          if (jsdata.ok) {
+            green('webhook is set')
+          } else
+            error('webhook / not ok', data)
+        } else {
+          error('webhook / not json', data)
+        }
       }
     })
-  ]
-).then((arr) => {
-  console.log('npmsbot is up')
-}).catch(error)
+  else {
+    error(`webhook / bad status code: ${res.statusCode}`)
+    if (res.statusCode === 429)
+      setTimeout(() => telegram.webhook(webhook_cb), 1000)
+  }
+}
+
+telegram.webhook(webhook_cb)
+
+https.createServer(https_options, handle).listen(config.port, err => {
+  if (err) error(error)
+  else
+    green('server is up')
+})
+
