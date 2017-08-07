@@ -2,7 +2,7 @@
   "webhook_url": "https://example.ru",
   "port": 443,
   "token": "123211123:AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-  "about_text": "Telegram Bot for searching Node.js [packages](https://npmjs.com/) using API of [npms.io](https://npms.io/). Bot works with InlineMode. Open sources on [Github](https://github.com/kekdude/npms-telegram-bot/)",
+  "about_text": "Telegram Bot for searching Node.js [packages](https://npmjs.com/) using API of [npms.io](https://npms.io/).\n\nSend me text message for search packages. Also works with InlineMode.\n\n[Github](https://github.com/kekdude/npms-telegram-bot/)",
   "doc_text": "You may use search qualifiers in any combination.\n\n`author:sindresorhus` Show or filter results by author\n`maintainer:sindresorhus` Show or filter results by maintainer\n`keywords:gulpplugin` Show or filter results by keywords\n`not:deprecated` Exclude packages that are deprecated, unstable or insecure\n\nFor the complete list of qualifiers, please read the [Search API documentation](https://api-docs.npms.io/#api-Search-ExecuteSearchQuery)",
   "tgURL": "https://api.telegram.org/bot",
   "npmsURL": "https://api.npms.io/v2",
