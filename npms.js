@@ -34,7 +34,7 @@ const webhook_cb = (res) => {
     })
   else {
     error(`webhook / bad status code: ${res.statusCode}`)
-    if (res.statusCode === 429)
+    if (res.statusCode == 429)
       setTimeout(() => telegram.webhook(webhook_cb), 1000)
   }
 }
@@ -43,7 +43,6 @@ telegram.webhook(webhook_cb)
 
 https.createServer(https_options, handle).listen(config.port, err => {
   if (err) error(error)
-  else
-    green('server is up')
+  else green('server is up')
 })
 
