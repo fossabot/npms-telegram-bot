@@ -5,7 +5,7 @@ const isJson = require('is-json')
 
 const config = require('./config')
 
-const https_options = {
+const httpsOptions = {
   key: fs.readFileSync('privkey.pem'),
   cert: fs.readFileSync('fullchain.pem')
 }
@@ -16,8 +16,8 @@ const resChunk = require('./lib/resChunk')
 const error = require('./lib/error')
 const green = require('./lib/green')
 
-const webhook_cb = (res) => {
-  if (res.statusCode == 200)
+const webhookCallback = (res) => {
+  if (res.statusCode === 200) {
     resChunk(res, (err, data) => {
       if (err) error(err)
       else {
@@ -25,24 +25,25 @@ const webhook_cb = (res) => {
           const jsdata = JSON.parse(data)
           if (jsdata.ok) {
             green('webhook is set')
-          } else
+          } else {
             error('webhook / not ok', data)
+          }
         } else {
           error('webhook / not json', data)
         }
       }
     })
-  else {
+  } else {
     error(`webhook / bad status code: ${res.statusCode}`)
-    if (res.statusCode == 429)
-      setTimeout(() => telegram.webhook(webhook_cb), 1000)
+    if (res.statusCode === 429) {
+      setTimeout(() => telegram.webhook(webhookCallback), 1000)
+    }
   }
 }
 
-telegram.webhook(webhook_cb)
+telegram.webhook(webhookCallback)
 
-https.createServer(https_options, handle).listen(config.port, err => {
+https.createServer(httpsOptions, handle).listen(config.port, err => {
   if (err) error(error)
   else green('server is up')
 })
-
